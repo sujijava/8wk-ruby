@@ -1,232 +1,131 @@
-## Month 1: Language Mastery + Design Thinking
+## Month 1: Ruby & OOP Fundamentals
 
-### Weeks 1–2: Ruby Deep Dive (with verbal drills)
+### Week 1: Ruby Metaprogramming & Language Internals
 
-#### Exercise 1: Build a Simple ORM
+**Focus:** These concepts appear frequently when debugging Rails, reading gem source code, or in "extend this DSL" pairing problems.
 
-**Implement:**
-
-* `Model.find(id)`
-* `Model.where(hash)`
-* `model.save`
-
-**Use:**
-
-* `define_method`
-* Class instance variables
-* Basic SQL generation
-
-**Verbal drill (5 min):**
-
-* Why not use `method_missing`?
-* Where does this abstraction leak?
-* What breaks under concurrency?
+| Day | Topic | Exercise |
+|-----|-------|----------|
+| 1 | Blocks, Procs, Lambdas | Build a retry mechanism: `with_retry(max: 3, delay: 2) { api_call }` that handles exceptions with exponential backoff |
+| 2 | define_method, method_missing | Create a `HashProxy` class where `proxy.foo` returns `hash[:foo]` — then discuss tradeoffs of each approach |
+| 3 | class_eval, instance_eval | Build a simple config DSL: `Config.define { setting :timeout, 30 }` |
+| 4 | Module patterns (include, extend, prepend) | Implement a `Trackable` module that adds `created_by` and `updated_by` tracking to any class |
+| 5 | Refinements | Refactor monkey-patched String methods into refinements — discuss when you'd use this in production |
+| 6-7 | **Weekly Problem** | Build a mini ActiveRecord: `User.where(name: "John").order(:created_at).limit(5)` with chainable query methods |
 
 ---
 
-#### Exercise 2: ActiveSupport-style `cattr_accessor`
+### Week 2: OOP Design & SOLID
 
-**Requirements:**
+**Focus:** Live refactoring is the most common senior pairing format. Practice identifying code smells and fixing them under time pressure.
 
-* Implement inheritance-aware behavior
-* Support overrides in subclasses
-
-**Verbal drill:**
-
-* Difference between class variables and class instance variables
-* Why Rails avoids `@@`
-
----
-
-#### Exercise 3: Retry Mechanism with Backoff
-
-```ruby
-with_retry(max: 3, backoff: :exponential) { external_api_call }
-```
-
-**Requirements:**
-
-* Configurable backoff strategy
-* Retry only specific exceptions
-
-**Verbal drill:**
-
-* When not to retry
-* Idempotency concerns
-* Observability hooks
+| Day | Topic | Exercise |
+|-----|-------|----------|
+| 1 | Single Responsibility | Refactor: Given a 200-line `OrderProcessor` class that validates, charges, sends emails, updates inventory — extract responsibilities |
+| 2 | Open/Closed | Extend a payment system to add Stripe without modifying existing PayPal code |
+| 3 | Dependency Injection | Refactor a class with hardcoded `HTTParty.get` calls to be testable |
+| 4 | Composition vs Inheritance | Given a `Vehicle` inheritance hierarchy that's gotten messy, refactor to composition |
+| 5 | Service Objects | Extract business logic from a fat controller: `OrdersController#create` that's 80 lines |
+| 6-7 | **Weekly Problem** | Design a notification system: users can receive notifications via email, SMS, push, Slack. Some notifications are immediate, some batched. Make it extensible. |
 
 ---
 
-### Weeks 3–4: OOP, Rails Patterns, and Boundaries
+### Week 3: Design Patterns in Ruby
 
-#### Exercise 4: Refactor a God Class
+**Focus:** Know 5-6 patterns cold with Ruby examples. Interviewers often ask "how would you approach X" and expect pattern vocabulary.
 
-Start with a ~150-line `OrderProcessor`.
-
-**Extract:**
-
-* Validation
-* Pricing
-* Inventory
-* Notifications
-
-**Constraints:**
-
-* Keep tests passing
-
-**Verbal drill:**
-
-* Why this is not over-engineering
-* When you would stop refactoring
-* Service objects vs domain models
+| Day | Topic | Exercise |
+|-----|-------|----------|
+| 1 | Strategy Pattern | Build a shipping cost calculator that supports multiple carriers (FedEx, UPS, USPS) with different rate algorithms |
+| 2 | Decorator Pattern | Implement a `Coffee` ordering system where you can add milk, sugar, whip — price and description update dynamically |
+| 3 | Factory Pattern | Create a parser factory that returns the right parser (JSON, XML, CSV) based on file extension |
+| 4 | Observer Pattern | Build a stock price alerting system where multiple watchers get notified on price changes |
+| 5 | Null Object Pattern | Refactor code riddled with `if user.subscription.nil?` checks |
+| 6-7 | **Weekly Problem** | Build a rules engine: `PricingEngine.calculate(order)` that applies discounts, coupons, bulk pricing, loyalty points in configurable order |
 
 ---
 
-#### Exercise 5: Design a Permission System
+### Week 4: Testing & Refactoring Under Pressure
 
-```ruby
-User.can?(:edit, resource)
-```
+**Focus:** Many pairing rounds give you failing specs and ask you to make them pass, or give you working code and ask you to add tests.
 
-**Requirements:**
-
-* Support growth in rules
-* Prefer composition over inheritance
-
-**Verbal drill:**
-
-* How requirements usually expand
-* Tradeoffs between policy objects vs rule tables
+| Day | Topic | Exercise |
+|-----|-------|----------|
+| 1 | TDD basics | Build a `RomanNumeral` converter test-first, strictly red-green-refactor |
+| 2 | Testing external APIs | Write tests for a weather service wrapper — practice stubbing, VCR-style approaches |
+| 3 | Testing time-dependent code | Test a `Subscription` class with trial periods, expiration — use Timecop/travel patterns |
+| 4 | Characterization tests | Given legacy code with no tests, write tests that capture current behavior before refactoring |
+| 5 | Test doubles deep dive | Know when to use stub vs mock vs spy — refactor over-mocked tests |
+| 6-7 | **Weekly Problem** | Given a `ReportGenerator` class with database calls, API calls, file writes — make it fully testable and write comprehensive specs in 45 minutes |
 
 ---
 
-#### Exercise 6: Form Object
+## Month 2: Rails, System Design & Interview Simulation
 
-**Multi-model signup:**
+### Week 5: Rails Performance & Architecture
 
-* `User`
-* `Company`
-* `Subscription`
-
-**Requirements:**
-
-* Validations
-* Error propagation
-
-**Verbal drill:**
-
-* Why not put this in the controller
-* Transaction boundaries
-* Partial failure handling
+| Day | Topic | Exercise |
+|-----|-------|----------|
+| 1 | N+1 and eager loading | Given a slow endpoint, identify and fix N+1s — practice with `bullet` gem patterns |
+| 2 | Database indexing | Review a schema, identify missing indexes, explain composite index ordering |
+| 3 | Background jobs | Design an idempotent job for payment processing that handles retries safely |
+| 4 | Caching strategies | Add Russian doll caching to a nested comment thread — handle invalidation |
+| 5 | Query optimization | Rewrite a complex ActiveRecord query in raw SQL, explain when you'd do this |
+| 6-7 | **Weekly Problem** | Profile and optimize an endpoint that's timing out: given a controller action that takes 8 seconds, get it under 200ms |
 
 ---
 
-### Bonus (End of Month 1): Data Modeling Drill ⭐
+### Week 6: API Design & System Integration
 
-**Design a high-volume table**
-Example: `transactions`
-
-**Cover:**
-
-* Primary key choice (UUID vs bigint)
-* Index strategy
-* Soft delete vs hard delete
-* When partitioning becomes necessary
-
-**Verbal drill:**
-
-* How this affects query performance
-* Migration risks in production
+| Day | Topic | Exercise |
+|-----|-------|----------|
+| 1 | RESTful design | Design API endpoints for a booking system — handle edge cases like conflicts, partial updates |
+| 2 | Versioning strategies | Add v2 of an endpoint while maintaining v1 — discuss path vs header versioning |
+| 3 | Error handling | Design a consistent error response format, implement custom exception handling |
+| 4 | Rate limiting | Implement a token bucket rate limiter in Ruby |
+| 5 | Webhooks | Design a webhook system: retries, signatures, idempotency keys |
+| 6-7 | **Weekly Problem** | Build an API client gem: `GithubClient.new(token).repos.list(org: "rails")` with pagination, error handling, retries |
 
 ---
 
-## Month 2: Systems, Scale, and Interviews
+### Week 7: System Design for Backend Roles
 
-### Weeks 5–6: Rails Performance & Reliability
-
-#### Exercise 7: Fix N+1 + Optimize Endpoint
-
-**Scenario:**
-
-* Start with a ~500ms endpoint
-
-**Techniques:**
-
-* Eager loading
-* Query reduction
-* Caching
-
-**Goal:**
-
-* Reduce latency to < 50ms
-
-**Verbal drill:**
-
-* How you measured performance
-* Cache invalidation strategy
-* When caching hurts
+| Day | Topic | Exercise |
+|-----|-------|----------|
+| 1 | URL shortener | Design with focus on: storage, collision handling, analytics, expiration |
+| 2 | Job queue | Design Sidekiq-like system: priorities, retries, dead letter queue |
+| 3 | Rate limiter (system level) | Distributed rate limiting across multiple servers |
+| 4 | Feed system | Design Twitter-like feed: fan-out strategies, caching, pagination |
+| 5 | Chat system | Design Slack-like: real-time delivery, persistence, read receipts |
+| 6-7 | **Weekly Problem** | Full system design: E-commerce inventory system handling concurrent purchases, backorders, reservations |
 
 ---
 
-#### Exercise 8: Idempotent Sidekiq Job
+### Week 8: Mock Interviews & Polish
 
-**Scenario:**
-
-* Payment processing job
-
-**Handle:**
-
-* Retries
-* Duplicate prevention
-* Race conditions
-
-**Verbal drill:**
-
-* Why idempotency matters
-* Database vs Redis locking
-* Failure states and recovery
+| Day | Topic | Exercise |
+|-----|-------|----------|
+| 1 | Mock pairing #1 | 45-min refactoring problem with timer |
+| 2 | Mock pairing #2 | Build a small library from scratch |
+| 3 | Mock system design | 30-min system design with whiteboarding |
+| 4 | Mock pairing #3 | Debug failing specs in unfamiliar codebase |
+| 5 | Weak spot review | Revisit hardest problems from previous weeks |
+| 6-7 | **Final Exercise** | Full interview simulation: 1 hour pairing + 30 min system design back-to-back |
 
 ---
 
-#### Exercise 9: Rate Limiter with Redis
+## Daily Rhythm
 
-```ruby
-RateLimiter.allow?(user_id, action, limit: 100, period: 1.hour)
-```
-
-**Requirements:**
-
-* Implement fixed window algorithm
-* Discuss sliding window alternative
-
-**Verbal drill:**
-
-* Why Redis over DB
-* TTL edge cases
-* Clock drift and fairness
+- **45-60 min:** Focused exercise for the day
+- **15 min:** Write notes on what you'd say out loud during pairing (practice narration)
+- **15 min:** Review one Ruby/Rails blog post or conference talk
 
 ---
 
-### Weeks 7–8: Interview Simulation & Storytelling
+## Key Interview Tips
 
-#### Exercise 10: Live Pairing Simulation
-
-**Shopping cart discount engine**
-
-**Discount types:**
-
-* Percentage
-* Fixed amount
-* Buy-One-Get-One (BOGO)
-
-**Requirements:**
-
-* Priority rules
-* Stacking logic
-* 45-minute time box
-
-**Must demonstrate:**
-
-* Clear communication
-* Scope control
-* Willingness to simplify
+1. **Narrate your thinking** — Senior roles evaluate communication as much as coding
+2. **Ask clarifying questions** — Don't assume requirements
+3. **Discuss tradeoffs** — Show you understand there's no perfect solution
+4. **Start simple, iterate** — Get something working first, then improve
+5. **Know when to stop** — Recognize "good enough" vs over-engineering
