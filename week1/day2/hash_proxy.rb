@@ -35,16 +35,13 @@ class HashProxyMethodMissing
     @hash = hash
   end
 
-  # TODO: Implement method_missing to access hash keys
-  # Hint: Check if the key exists in @hash, return value or raise NoMethodError
   def method_missing(method_name, *args, &block)
-    # Your implementation here
+    return @hash[method_name] if @hash.key?(method_name)
+    super
   end
 
-  # TODO: Override respond_to_missing? for proper introspection
-  # This makes respond_to? work correctly
   def respond_to_missing?(method_name, include_private = false)
-    # Your implementation here
+    @hash.key?(method_name)
   end
 end
 
@@ -53,9 +50,15 @@ class HashProxyDefineMethod
   def initialize(hash)
     @hash = hash
 
-    # TODO: Define a method for each hash key
-    # Hint: Use define_singleton_method to create instance-specific methods
-    # Loop through @hash.keys and define a method for each key
+    @hash.each do |key, value|
+      define_singleton_method(key) do
+        value
+      end
+    end
+
+    define_singleton_method(:respond_to?) do |method_name, include_private = false|
+      @hash.key?(method_name) || super(method_name, include_private)
+    end
   end
 end
 
@@ -87,33 +90,33 @@ if __FILE__ == $0
   puts "Testing HashProxy implementations...\n\n"
 
   # Test method_missing version
-  # puts "=== method_missing approach ==="
-  # proxy = HashProxyMethodMissing.new(database: 'postgres', timeout: 30)
-  # puts "database: #{proxy.database}"
-  # puts "timeout: #{proxy.timeout}"
-  # puts "respond_to?(:database): #{proxy.respond_to?(:database)}"
-  # puts "respond_to?(:unknown): #{proxy.respond_to?(:unknown)}"
-  #
-  # begin
-  #   proxy.unknown
-  # rescue NoMethodError => e
-  #   puts "Caught NoMethodError: #{e.message}"
-  # end
+  puts "=== method_missing approach ==="
+  proxy = HashProxyMethodMissing.new(database: 'postgres', timeout: 30)
+  puts "database: #{proxy.database}"
+  puts "timeout: #{proxy.timeout}"
+  puts "respond_to?(:database): #{proxy.respond_to?(:database)}"
+  puts "respond_to?(:unknown): #{proxy.respond_to?(:unknown)}"
+  
+  begin
+    proxy.unknown
+  rescue NoMethodError => e
+    puts "Caught NoMethodError: #{e.message}"
+  end
 
   # Test define_method version
-  # puts "\n=== define_method approach ==="
-  # proxy2 = HashProxyDefineMethod.new(database: 'postgres', timeout: 30)
-  # puts "database: #{proxy2.database}"
-  # puts "timeout: #{proxy2.timeout}"
-  # puts "respond_to?(:database): #{proxy2.respond_to?(:database)}"
-  #
-  # begin
-  #   proxy2.unknown
-  # rescue NoMethodError => e
-  #   puts "Caught NoMethodError: #{e.message}"
-  # end
+  puts "\n=== define_method approach ==="
+  proxy2 = HashProxyDefineMethod.new(database: 'postgres', timeout: 30)
+  puts "database: #{proxy2.database}"
+  puts "timeout: #{proxy2.timeout}"
+  puts "respond_to?(:database): #{proxy2.respond_to?(:database)}"
+  
+  begin
+    proxy2.unknown
+  rescue NoMethodError => e
+    puts "Caught NoMethodError: #{e.message}"
+  end
 
   # Performance comparison
-  # puts "\n=== Performance Comparison ==="
-  # HashProxyBenchmark.compare
+  puts "\n=== Performance Comparison ==="
+  HashProxyBenchmark.compare
 end

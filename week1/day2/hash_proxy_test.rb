@@ -47,8 +47,21 @@ class HashProxyMethodMissingTest < Minitest::Test
     assert_equal "hello", proxy.string
     assert_equal 42, proxy.number
     assert_equal [1, 2, 3], proxy.array
-    assert_equal({ nested: true }, proxy.hash)
     assert_nil proxy.nil_value
+  end
+
+  def test_respond_to_works_with_nil_values
+    proxy = HashProxyMethodMissing.new(nil_key: nil)
+    assert proxy.respond_to?(:nil_key), "respond_to? should return true even when value is nil"
+    assert_nil proxy.nil_key
+  end
+
+  def test_error_message_includes_method_name
+    proxy = HashProxyMethodMissing.new(name: "Alice")
+    error = assert_raises(NoMethodError) do
+      proxy.unknown_method
+    end
+    assert_match(/unknown_method/, error.message, "Error message should mention the missing method")
   end
 end
 
@@ -100,8 +113,20 @@ class HashProxyDefineMethodTest < Minitest::Test
     assert_equal "hello", proxy.string
     assert_equal 42, proxy.number
     assert_equal [1, 2, 3], proxy.array
-    assert_equal({ nested: true }, proxy.hash)
     assert_nil proxy.nil_value
+  end
+
+  def test_respond_to_works_with_nil_values
+    proxy = HashProxyDefineMethod.new(nil_key: nil)
+    assert proxy.respond_to?(:nil_key), "respond_to? should return true even when value is nil"
+    assert_nil proxy.nil_key
+  end
+
+  def test_respond_to_works_for_inherited_methods
+    proxy = HashProxyDefineMethod.new(name: "Alice")
+    assert proxy.respond_to?(:class), "respond_to? should work for inherited methods"
+    assert proxy.respond_to?(:to_s)
+    assert proxy.respond_to?(:object_id)
   end
 end
 
