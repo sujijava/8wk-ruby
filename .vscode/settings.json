@@ -1,0 +1,7 @@
+{
+    "editor.defaultFormatter": "Shopify.ruby-lsp",
+    "editor.tabSize": 2,
+    "[ruby]": {
+        "editor.defaultFormatter": "misogi.ruby-rubocop"
+    }
+}
