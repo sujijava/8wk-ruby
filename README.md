@@ -132,3 +132,15 @@
 3. **Discuss tradeoffs** — Show you understand there's no perfect solution
 4. **Start simple, iterate** — Get something working first, then improve
 5. **Know when to stop** — Recognize "good enough" vs over-engineering
+
+# Daily Challenge Build Guide for AI
+1. For EACH problem we need to files: 
+  1. challenge_name.rb
+  - problem 
+  - instruction 
+  - all in one file
+
+  2. challenge_name_solution.rb
+  - solution file
+  - at the initial creation, it is blank file. 
+2. A day can have multiple challenges. 
