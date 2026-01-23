@@ -272,15 +272,6 @@ ruby fat_controller_after.rb   # See your solution
 5. **Create a service pipeline** - Chain multiple services together
 6. **Add caching layer** - Inject cache as dependency
 
-## Real-World Context
-
-In senior interviews, you'll be judged on:
-- **Do you reach for dependency injection naturally?**
-- **Can you identify when a controller is too fat?**
-- **Do you know when to extract a service object?**
-- **Can you test complex logic in isolation?**
-- **Do you understand the tradeoffs?** (over-abstraction vs. coupling)
-
 These patterns appear everywhere in Rails codebases:
 - Payment processing (Stripe, PayPal adapters)
 - External APIs (wrapping third-party services)

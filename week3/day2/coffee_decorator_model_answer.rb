@@ -376,10 +376,6 @@ order = CoffeeShop.order(:house_blend, size: :venti, add_ons: [:soy, :caramel], 
 puts "Order with discount:"
 print_order(order)
 
-# ============================================================================
-# WHY THIS SOLUTION WOULD SCORE WELL IN AN INTERVIEW
-# ============================================================================
-#
 # 1. CORRECT PATTERN IMPLEMENTATION
 #    - Clear separation: Component (Coffee) vs Decorator (CoffeeDecorator)
 #    - Decorators properly delegate to wrapped component

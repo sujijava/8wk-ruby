@@ -156,17 +156,3 @@ Both should produce similar output, but the `after` version should make adding n
 4. **Create a mock provider** for testing without hitting real APIs
 5. **Add provider capabilities** - some support refunds, some don't
 6. **Implement retry logic** that works for all providers
-
-## Real-World Context
-
-This is a classic pairing interview problem because:
-- Tests your understanding of OOP principles
-- Shows if you can design extensible systems
-- Reveals whether you reach for inheritance or composition
-- Demonstrates clean code practices
-
-In Rails codebases, you'll see this pattern in:
-- Payment processing gems (pay, solidus_pay, etc.)
-- File upload handlers (CarrierWave, Shrine)
-- Authentication providers (OmniAuth)
-- Background job adapters (ActiveJob)

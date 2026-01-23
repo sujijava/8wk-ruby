@@ -187,8 +187,6 @@ Think about (but don't implement unless you have time):
 - How would you add monitoring and alerting?
 - How would this work with background jobs (Sidekiq)?
 
-==================== INTERVIEW TALKING POINTS ====================
-
 Be ready to discuss:
 
 1. WHY DID YOU CHOOSE THIS DESIGN?

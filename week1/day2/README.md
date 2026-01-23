@@ -1,12 +1,5 @@
 # Day 2: define_method & method_missing - Hash Proxy
 
-## Real Interview Context
-
-This is based on actual pair-programming questions from companies like:
-- **Stripe** - Building flexible configuration objects
-- **GitHub** - Internal DSL for feature flags
-- **Shopify** - Dynamic attribute access patterns
-
 ## The Problem
 
 Create a `HashProxy` class that allows accessing hash keys as methods:
@@ -53,7 +46,7 @@ config.unknown   # => raises NoMethodError
 - Less flexible (must know methods upfront)
 - Better stack traces and introspection
 
-## Interview Discussion Points
+## Discussion Points
 
 During a real pair-programming session, expect to discuss:
 

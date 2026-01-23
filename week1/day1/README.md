@@ -1,12 +1,5 @@
 # Day 1: Blocks, Procs, Lambdas - Retry Mechanism
 
-## Real Interview Context
-
-This is based on actual pair-programming questions from companies like:
-- **Shopify** - Building resilient service clients
-- **Stripe** - Handling flaky payment gateway APIs
-- **GitHub** - Retry logic for internal microservices
-
 ## The Problem
 
 Build a `with_retry` method that:
@@ -38,7 +31,7 @@ end
 - What's the difference between `Proc.new` and `lambda`?
 - How does `return` behave differently in each?
 
-### Interview Discussion Points
+### Discussion Points
 
 During a real pair-programming session, expect to discuss:
 

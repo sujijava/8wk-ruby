@@ -30,7 +30,7 @@
 
 ### Week 3: Design Patterns in Ruby
 
-**Focus:** Know 5-6 patterns cold with Ruby examples. Interviewers often ask "how would you approach X" and expect pattern vocabulary.
+**Focus:** Know 5-6 patterns cold with Ruby examples. 
 
 | Day | Topic | Exercise |
 |-----|-------|----------|
@@ -124,14 +124,6 @@
 - **15 min:** Plan focus areas for the following week
 
 ---
-
-## Key Interview Tips
-
-1. **Narrate your thinking** — Senior roles evaluate communication as much as coding
-2. **Ask clarifying questions** — Don't assume requirements
-3. **Discuss tradeoffs** — Show you understand there's no perfect solution
-4. **Start simple, iterate** — Get something working first, then improve
-5. **Know when to stop** — Recognize "good enough" vs over-engineering
 
 # Daily Challenge Build Guide for AI
 1. For EACH problem we need to files: 

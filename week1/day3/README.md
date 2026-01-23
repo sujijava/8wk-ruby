@@ -1,13 +1,5 @@
 # Day 3: class_eval & instance_eval - Config DSL
 
-## Real Interview Context
-
-This is based on actual pair-programming questions from companies like:
-- **Heroku** - Building internal configuration systems
-- **Stripe** - DSL for payment gateway settings
-- **Airbnb** - Feature flag configuration
-- **HashiCorp** - Terraform-like configuration patterns
-
 ## The Problem
 
 Build a configuration DSL that allows you to define settings using a clean, Ruby-like syntax:
@@ -80,7 +72,7 @@ class Foo
 end
 ```
 
-## Interview Discussion Points
+## Discussion Points
 
 During a real pair-programming session, expect to discuss:
 
