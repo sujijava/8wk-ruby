@@ -90,3 +90,22 @@ discount = 10 / 100  # ✗ Integer division = 0
 ```
 
 **Why:** Prevents precision loss in discount calculations. Only round to 2 decimals for display, never in intermediate calculations.
+
+
+## Roman <-> Integer: Handling Subtractive case - add subtractive cases to values.
+  ROMAN_VALUES = {
+    "M" => 1000,
+    "CM" => 900,   # 900 - subtractive case
+    "D" => 500,
+    "CD" => 400,   # 400 - subtractive case
+    "C" => 100,
+    "XC" => 90,    # 90 - subtractive case
+    "L" => 50,
+    "XL" => 40,    # 40 - subtractive case
+    "X" => 10,
+    "IX" => 9,     # 9 - subtractive case
+    "V" => 5,
+    "IV" => 4,     # 4 - subtractive case
+    "I" => 1
+  }.freeze
+
