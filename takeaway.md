@@ -118,3 +118,22 @@ discount = 10 / 100  # ✗ Integer division = 0
   | .where()      | Filter records                        | .where(published: true)       |
   | .preload()    | Eager load (always 2 queries)         | .preload(:author)             |
   | .eager_load() | Eager load (always 1 query with JOIN) | .eager_load(:author)          |
+
+
+# Types of Indexes:
+# • Single-column index: CREATE INDEX idx_email ON users(email)
+# • Composite index: CREATE INDEX idx_status_created ON orders(status, created_at)
+# • Unique index: CREATE UNIQUE INDEX idx_unique_email ON users(email) - just single column index but that column has unique constraint
+# • Partial index: CREATE INDEX idx_active_users ON users(email) WHERE active = true
+
+
+======================================
+  # Index 1: Composite index
+  QueryAnalyzer.add_index('inventory_logs', ['product_id', 'change_type'])
+
+  # Index 2: Single-column index
+  QueryAnalyzer.add_index('inventory_logs', 'product_id')  # ❌ REDUNDANT!
+
+  Why is Index 2 redundant?
+
+  The composite index ['product_id', 'change_type'] can already handle queries that filter by just product_id because it's the leftmost column.
