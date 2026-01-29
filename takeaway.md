@@ -109,3 +109,12 @@ discount = 10 / 100  # ✗ Integer division = 0
     "I" => 1
   }.freeze
 
+
+
+  | Method        | Purpose                               | Example                       |
+  |---------------|---------------------------------------|-------------------------------|
+  | .includes()   | Eager load associations               | .includes(:author, :comments) |
+  | .select()     | Choose columns to load                | .select(:id, :title)          |
+  | .where()      | Filter records                        | .where(published: true)       |
+  | .preload()    | Eager load (always 2 queries)         | .preload(:author)             |
+  | .eager_load() | Eager load (always 1 query with JOIN) | .eager_load(:author)          |
